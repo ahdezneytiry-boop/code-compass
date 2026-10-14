@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const version=JSON.parse(fs.readFileSync('package.json','utf8')).version;
+const out=path.join('release',`知码-${version}-新手使用包`);fs.mkdirSync(out,{recursive:true});
+for(const name of ['先读我.html','常见词白话表.html','开发者文档.html'])fs.copyFileSync(path.join('guide-output',name),path.join(out,name));
+if(fs.existsSync('guide-output/guide-onboarding.png'))fs.copyFileSync('guide-output/guide-onboarding.png',path.join(out,'guide-onboarding.png'));
+fs.copyFileSync(`code-compass-zh-${version}.vsix`,path.join(out,`code-compass-zh-${version}.vsix`));
+fs.copyFileSync('installer/01-install.cmd',path.join(out,'01-install.cmd'));
+fs.writeFileSync(path.join(out,'installer.ps1'),'\uFEFF'+fs.readFileSync('installer/installer.ps1','utf8').replace(/^\uFEFF/,''));
+fs.cpSync('examples',path.join(out,'练习项目'),{recursive:true});fs.cpSync('docs',path.join(out,'开发设计文档'),{recursive:true});
+fs.writeFileSync(path.join(out,'从这里开始.txt'),'请先全部解压缩，再双击 01-install.cmd。\r\n不知道怎么操作时，双击“先读我.html”。\r\n不会的词可以在“常见词白话表.html”查找。\r\n技术文档放在“开发设计文档”，普通使用者不用阅读。\r\n');
+const source=path.join('release',`code-compass-source-v${version}`);fs.mkdirSync(source,{recursive:true});
+for(const dir of ['src','scripts','test','docs','media','examples','licenses','installer','.vscode','dist'])fs.cpSync(dir,path.join(source,dir),{recursive:true});
+for(const name of ['package.json','tsconfig.json','pnpm-lock.yaml','pnpm-workspace.yaml','README.md','LICENSE','THIRD_PARTY_NOTICES.md','.gitignore','.vscodeignore'])fs.copyFileSync(name,path.join(source,name));
+console.log(out);console.log(source);

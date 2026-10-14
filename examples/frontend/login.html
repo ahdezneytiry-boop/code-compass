@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>知码 · 登录页面结构示例</title>
+  <style>
+    body { margin: 48px auto; max-width: 480px; padding: 24px; font: 16px/1.7 system-ui; color: #293c39; background: #f3f6f4; }
+    form { display: grid; gap: 12px; padding: 28px; border: 1px solid #d5e0da; border-radius: 16px; background: white; }
+    input, button { padding: 12px; font: inherit; border: 1px solid #bfcfc7; border-radius: 8px; }
+    button { color: white; background: #426c5d; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>从读懂一段代码开始</h1>
+    <p>悬停 form、label、input，查看它们在页面中的职责。</p>
+    <form>
+      <label for="username">用户名</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">密码</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="button" onclick="document.getElementById('result').textContent='这是结构演示，尚未连接后端。'">了解此示例</button>
+      <p id="result" aria-live="polite"></p>
+    </form>
+  </main>
+</body>
+</html>

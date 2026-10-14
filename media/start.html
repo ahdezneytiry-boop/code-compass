@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{CSP}}; script-src 'nonce-{{NONCE}}'; img-src {{CSP}};">
+<link rel="stylesheet" href="{{CSS}}"><title>知码 · 从这里开始</title></head>
+<body><main class="guide">
+<header><span class="brand">知码 <span>一步一步，看懂代码</span></span><button id="help" class="quiet" data-action="help">不会操作，查看文字步骤</button></header>
+<nav aria-label="练习步骤"><button data-step="0" aria-current="step">1 准备练习</button><button data-step="1">2 读懂一句</button><button data-step="2">3 写下理解</button><button data-step="3">4 试着改错</button></nav>
+<section class="intro"><span id="eyebrow">第一步 · 不需要准备代码</span><h1 id="heading">先有一个可以放心试的地方。</h1><p id="lead">我们准备了一个很小的练习。你只需选择放在哪里，知码会帮你复制好。</p></section>
+<div class="columns"><section class="task" aria-labelledby="taskTitle"><h2 id="taskTitle">现在只做这一件事</h2><p id="instruction">点下面的按钮，再选择“桌面”或你方便找到的位置。新的练习窗口打开后，继续第二步。</p><button class="primary" id="mainAction" data-action="practice">创建我的练习</button><p class="hint" id="expected">成功时：会出现一个新的 VS Code 窗口，里面是“知码练习”文件夹。</p><p id="error" role="alert"></p><details><summary>我已经有自己的代码</summary><p>打开装着代码的整个文件夹。没有代码也没关系，先用练习即可。</p><button data-action="folder">选择我自己的代码文件夹</button></details></section>
+<aside><div class="sample"><span id="sampleLabel">你马上会看到的代码 · 不用背下来</span><pre><code id="code">def greet(name):
+    return "你好，" + name
+
+message = greet("小林")</code></pre></div><div class="explain"><h2 id="wordTitle">“函数”是什么意思？</h2><p id="wordBody">给一组步骤起个名字，需要的时候再叫它做一次。这里的 greet 就负责拼出一句问候。</p><button data-action="terms">还有词看不懂，查一查</button></div></aside></div>
+<footer><span>内容保存在你的电脑里 · 当前练习不运行代码</span><button id="next">我完成了，下一步 →</button></footer>
+</main><script nonce="{{NONCE}}" src="{{JS}}"></script></body></html>

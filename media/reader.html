@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src {{CSP}}; script-src 'nonce-{{NONCE}}';">
+<link rel="stylesheet" href="{{CSS}}"><title>知码 · 读懂 AI 代码</title></head>
+<body><div class="app">
+<aside class="rail"><div class="brand"><span class="brand-mark">知</span><div>知码<small>AI 代码阅读室</small></div></div>
+<button class="import-button" data-action="folder"><span>＋</span> 打开 AI 代码文件夹</button>
+<div class="project-label"><span class="dot"></span><span id="projectName">准备开始</span><button class="icon-button" data-action="chooseRoot" title="切换已打开的项目" aria-label="切换已打开的项目">⌄</button></div>
+<button class="overview-button active" id="overviewButton">◈ <span>先看项目全貌</span></button>
+<div class="rail-heading">推荐阅读顺序 <span id="fileCount"></span></div><div id="fileList" class="file-list"></div>
+<div class="rail-bottom"><div id="progressText">一次只读一小段</div><div class="progress-track"><div id="progressBar"></div></div><button data-action="help" class="text-button">不知道怎么用？看这里 ↗</button></div></aside>
+<main><header class="topbar"><span id="breadcrumb">我的项目 / 阅读导航</span><div><span class="local-badge"><span class="dot"></span> 在本机整理</span><button class="text-button" data-action="refresh">↻ 重新整理</button></div></header>
+<div id="feedback" role="status" aria-live="polite" hidden></div>
+<section id="empty" class="empty" hidden><span class="eyebrow">从 AI 生成，到自己看懂</span><h1>代码已经有了。<br>我们从哪里开始看？</h1><p>选择装着 AI 代码的整个文件夹。知码会整理文件之间的联系，带你一次读懂一小段。</p><button class="primary" data-action="folder">打开我的 AI 代码文件夹 <span>↗</span></button><div class="empty-steps"><span>01 选项目</span><span>02 看全貌</span><span>03 读一小段</span></div><small>不用运行代码，不用先配置 AI 服务。</small></section>
+<section id="loading" class="empty" hidden><span class="eyebrow">正在准备你的阅读路线</span><h1>先把这一堆代码，<br>整理得有条理。</h1><p>读取项目说明、页面、处理步骤与本地引用关系……</p><div class="loading-line"></div></section>
+<section id="overview" hidden><div class="hero"><div><span class="eyebrow">先看全貌 · 再读细节</span><h1>不用一口气<br>看懂所有代码<span class="green">。</span></h1><p id="projectDescription"></p><small id="descriptionSource"></small><button class="primary" id="startReading">带我读第一段 <span>→</span></button></div><div class="hero-art" aria-hidden="true"><div class="art-orbit"></div><div class="art-sheet sheet-back"></div><div class="art-sheet"><span class="art-tag">CODE → UNDERSTANDING</span><div class="art-code"><i></i><i></i><i></i></div><div class="art-note"><b>原来，这段是在……</b><span>把代码换成自己的理解。</span></div><span class="art-spark">✳</span></div></div></div>
+<div class="section-head"><div><span class="eyebrow">你的项目，拆开来看</span><h2>先找到你关心的那一部分</h2></div><span id="scopeNote" class="muted"></span></div><div id="roles" class="role-grid"></div>
+<div class="section-head"><div><span class="eyebrow">文件之间怎样配合</span><h2>顺着引用，继续往下读</h2></div><span class="muted">引用关系 ≠ 实际运行顺序</span></div><div id="connections" class="connections"></div>
+<div class="honesty">这是依据代码结构整理的本地导读，项目用途优先引用作者说明。业务含义不明确时，会保留疑问；不会假装已运行或完全理解代码。</div></section>
+<section id="reading" hidden><div class="reading-heading"><div><span class="eyebrow" id="fileRole"></span><h1 id="fileTitle"></h1><p id="fileReason"></p></div><button class="secondary" id="openCode">在编辑器对照 ↗</button></div>
+<div id="chapters" class="chapter-tabs" aria-label="代码段落"></div>
+<div class="reading-grid"><section class="code-card"><div class="card-header"><span id="codeName"></span><span id="lineRange"></span></div><div id="code" class="code-lines" tabindex="0" aria-label="当前代码片段"></div><div class="code-foot" id="codeFoot">只读预览 · 修改请打开编辑器</div></section>
+<section class="explanation"><span class="eyebrow">用白话说，这一段</span><h2 id="chapterTitle"></h2><p class="summary" id="summary"></p><div class="io"><div><small>从哪里来</small><p id="input"></p></div><span>↓</span><div><small>到哪里去</small><p id="output"></p></div></div><h3>顺着代码看</h3><ol id="steps"></ol><div id="termBox"><h3>这几个词，顺手弄懂</h3><div id="terms"></div></div></section></div>
+<div class="reading-footer"><button class="text-button" id="previous">← 上一段</button><span id="chapterCount"></span><button class="primary" id="next">这段看过了，继续 →</button></div>
+<div class="ask-box"><div><strong>还是没明白？带着具体问题去问 AI。</strong><p>复制这段代码和一份白话提问，粘贴到你常用的 AI。只复制，不自动发送。</p></div><button class="secondary" id="ask">复制这段的提问 ↗</button></div></section>
+</main></div><script nonce="{{NONCE}}" src="{{JS}}"></script></body></html>

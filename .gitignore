@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.test-user/
+.test-extensions/
+.test-install-extensions/
+.test-install-user/
+test-results/
+guide-output/
+release/
+*.zip

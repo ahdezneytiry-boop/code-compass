@@ -1,0 +1,308 @@
+{
+  "name": "code-compass-zh",
+  "displayName": "知码 · 中文代码导读",
+  "description": "读懂 AI 写的项目：文件关系、推荐阅读顺序、代码与白话解释并排阅读。",
+  "version": "0.4.0",
+  "publisher": "local-learning",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahdezneytiry-boop/code-compass.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onLanguage:python",
+    "onLanguage:html",
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "check": "tsc --noEmit",
+    "test": "node scripts/build.mjs && node --test test/core.test.cjs test/backup.test.cjs test/backup-commands.test.cjs test/contracts.cjs test/reader.test.cjs",
+    "package": "node scripts/build.mjs && vsce package --no-dependencies --allow-missing-repository",
+    "test:integration": "node scripts/test-vscode.mjs"
+  },
+  "dependencies": {
+    "sql.js": "1.13.0",
+    "web-tree-sitter": "0.20.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "1.85.0",
+    "@types/sql.js": "^1.4.9",
+    "typescript": "^5.7.0",
+    "esbuild": "^0.25.0",
+    "tree-sitter-wasms": "0.1.13",
+    "@vscode/vsce": "^3.0.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "zhima.readProject",
+        "title": "知码：读懂 AI 写的项目",
+        "icon": "$(book)"
+      },
+      {
+        "command": "zhima.importProject",
+        "title": "知码：打开 AI 代码文件夹",
+        "icon": "$(folder-opened)"
+      },
+      {
+        "command": "zhima.toggle",
+        "title": "知码：切换学习模式",
+        "icon": "$(book)"
+      },
+      {
+        "command": "zhima.refresh",
+        "title": "知码：刷新当前文件",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "zhima.annotate",
+        "title": "知码：给这段代码写笔记",
+        "icon": "$(add)"
+      },
+      {
+        "command": "zhima.editNote",
+        "title": "知码：修改笔记",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "zhima.deleteNote",
+        "title": "知码：删除笔记",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "zhima.reanchor",
+        "title": "知码：重新选择笔记对应的代码"
+      },
+      {
+        "command": "zhima.terms",
+        "title": "知码：查一查不懂的词"
+      },
+      {
+        "command": "zhima.explainFile",
+        "title": "知码：这个文件是做什么的"
+      },
+      {
+        "command": "zhima.translate",
+        "title": "知码：解释粘贴的报错"
+      },
+      {
+        "command": "zhima.previewFix",
+        "title": "知码：先看看怎么改错"
+      },
+      {
+        "command": "zhima.applyFix",
+        "title": "知码：应用已预览修复"
+      },
+      {
+        "command": "zhima.storage",
+        "title": "知码：打开本地数据目录"
+      },
+      {
+        "command": "zhima.start",
+        "title": "知码：从这里开始（一步一步）",
+        "icon": "$(play)"
+      },
+      {
+        "command": "zhima.openPractice",
+        "title": "知码：创建我的练习"
+      },
+      {
+        "command": "zhima.exportNotes",
+        "title": "知码：备份我的笔记",
+        "icon": "$(export)"
+      },
+      {
+        "command": "zhima.importNotes",
+        "title": "知码：从备份恢复笔记",
+        "icon": "$(import)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "zhima",
+          "title": "知码",
+          "icon": "media/compass.svg"
+        }
+      ]
+    },
+    "views": {
+      "zhima": [
+        {
+          "id": "zhima.overview",
+          "name": "项目阅读室"
+        },
+        {
+          "id": "zhima.files",
+          "name": "代码文件"
+        },
+        {
+          "id": "zhima.notes",
+          "name": "我的笔记"
+        },
+        {
+          "id": "zhima.health",
+          "name": "可以改善的地方"
+        },
+        {
+          "id": "zhima.errors",
+          "name": "哪里出了问题"
+        },
+        {
+          "id": "zhima.dictionary",
+          "name": "不懂的词"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "zhima.annotate",
+          "when": "resourceLangId == python || resourceLangId == html",
+          "group": "zhima@1"
+        },
+        {
+          "command": "zhima.explainFile",
+          "when": "resourceLangId == python || resourceLangId == html",
+          "group": "zhima@2"
+        },
+        {
+          "command": "zhima.previewFix",
+          "when": "resourceLangId == python || resourceLangId == html",
+          "group": "zhima@3"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "zhima.refresh",
+          "when": "view == zhima.overview",
+          "group": "navigation"
+        },
+        {
+          "command": "zhima.toggle",
+          "when": "view == zhima.overview",
+          "group": "navigation"
+        },
+        {
+          "command": "zhima.annotate",
+          "when": "view == zhima.notes",
+          "group": "navigation"
+        },
+        {
+          "command": "zhima.terms",
+          "when": "view == zhima.dictionary",
+          "group": "navigation"
+        },
+        {
+          "command": "zhima.exportNotes",
+          "when": "view == zhima.notes",
+          "group": "navigation@2"
+        },
+        {
+          "command": "zhima.importNotes",
+          "when": "view == zhima.notes",
+          "group": "navigation@3"
+        },
+        {
+          "command": "zhima.readProject",
+          "when": "view == zhima.overview",
+          "group": "navigation@0"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "zhima.editNote",
+          "when": "viewItem == note",
+          "group": "inline"
+        },
+        {
+          "command": "zhima.deleteNote",
+          "when": "viewItem == note",
+          "group": "inline"
+        },
+        {
+          "command": "zhima.reanchor",
+          "when": "viewItem == note"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "知码",
+      "properties": {
+        "zhima.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用学习模式。关闭后清除导读装饰和学习提示；不会修改 VS Code 原有面板。"
+        },
+        "zhima.regionBackground": {
+          "type": "boolean",
+          "default": true,
+          "description": "显示淡色职责分区背景。"
+        },
+        "zhima.functionLines": {
+          "type": "number",
+          "default": 50,
+          "minimum": 5,
+          "description": "函数长度提示阈值。"
+        },
+        "zhima.nestingDepth": {
+          "type": "number",
+          "default": 4,
+          "minimum": 1,
+          "description": "控制流嵌套提示阈值。"
+        },
+        "zhima.parameterCount": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "description": "函数参数个数提示阈值（不计 self / cls）。"
+        },
+        "zhima.maxFileKB": {
+          "type": "number",
+          "default": 1024,
+          "minimum": 16,
+          "maximum": 4096,
+          "description": "自动分析文件的最大大小（KB）。"
+        },
+        "zhima.ignoreDirectories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "node_modules",
+            ".git",
+            "__pycache__",
+            "venv",
+            ".venv",
+            "dist",
+            "build"
+          ],
+          "description": "项目文件树与自动分析忽略的目录名称。"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>灵感便签</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header><h1>把想到的，先记下来。</h1><p>不必完整，一句话也可以。</p></header>
+  <form id="note-form">
+    <input id="idea" placeholder="刚刚想到了什么？" maxlength="200" required>
+    <button type="submit">记下来</button>
+  </form>
+  <section id="notes" aria-label="我的便签"></section>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

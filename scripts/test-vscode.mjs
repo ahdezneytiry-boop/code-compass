@@ -1,0 +1,11 @@
+import { spawn } from 'node:child_process';
+import path from 'node:path';
+import fs from 'node:fs';
+const root=path.resolve(import.meta.dirname,'..');
+const executable=process.env.VSCODE_EXECUTABLE || (process.platform==='win32'?path.join(process.env.LOCALAPPDATA,'Programs','Microsoft VS Code','Code.exe'):'/usr/share/code/code');
+if(!fs.existsSync(executable))throw new Error('请通过 VSCODE_EXECUTABLE 指定 VS Code 可执行文件。');
+const env={...process.env};delete env.ELECTRON_RUN_AS_NODE;
+const extensionPath=process.env.VSCODE_EXTENSION_PATH || root;
+const child=spawn(executable,[`--extensionDevelopmentPath=${extensionPath}`,`--extensionTestsPath=${path.join(root,'test','integration.cjs')}`,`--user-data-dir=${path.join(root,'.test-user')}`,`--extensions-dir=${path.join(root,'.test-extensions')}`,'--disable-extensions','--disable-workspace-trust','--skip-welcome','--skip-release-notes','--disable-gpu',path.join(root,'examples')],{env,stdio:'inherit',windowsHide:true});
+child.on('error',error=>{console.error(error);process.exitCode=1});
+child.on('exit',code=>{process.exitCode=code??1;});

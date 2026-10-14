@@ -1,0 +1,5 @@
+body { max-width: 680px; margin: 70px auto; padding: 24px; background: #f4f6ef; color: #293f32; font-family: sans-serif; }
+form { display: flex; gap: 12px; }
+input { flex: 1; padding: 14px; border: 1px solid #bdcbbd; border-radius: 8px; }
+button { padding: 12px 20px; border: 0; border-radius: 8px; background: #376a4d; color: white; }
+#notes p { padding: 20px; border-radius: 10px; background: white; }
